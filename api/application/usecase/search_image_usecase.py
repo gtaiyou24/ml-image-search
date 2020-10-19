@@ -32,12 +32,10 @@ class SearchImageUseCase:
         image_ids = self.index_repository.search(image_vector, k)
 
         # 6. 画像IDをもとに画像を取得する
-        images = list()
-        for image_id in image_ids:
-            images.append(self.image_repository.get(image_id))
+        image_list = [self.image_repository.get(image_id) for image_id in image_ids]
 
         # 7. DTO(Data Transfer Object)を生成する
-        return self._make_dto(images)
+        return self._make_dto(image_list)
 
-    def _make_dto(self, images: List[Image]) -> SearchResultDto:
-        return SearchResultDto([SearchResultDto.Image(image.image_id.id, image.image_url.url) for image in images])
+    def _make_dto(self, image_list: List[Image]) -> SearchResultDto:
+        return SearchResultDto([SearchResultDto.Image(image.image_id.id, image.image_url.url) for image in image_list])
