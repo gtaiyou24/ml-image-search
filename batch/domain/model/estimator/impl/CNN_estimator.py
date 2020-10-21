@@ -1,3 +1,5 @@
+import numpy as np
+
 from keras.models import Model
 from keras.utils import to_categorical
 
@@ -34,7 +36,7 @@ class CnnEstimator(Estimator):
         # 出力層から１つ前の中間層を出力
         self.hidden_layer_model = Model(inputs=self.model.input, outputs=self.model.get_layer('image_vector_dense').output)
 
-    def predict(self, X):
+    def predict(self, X) -> np.ndarray:
         return self.hidden_layer_model.predict(self._feature_of(X))
 
     def _feature_of(self, X):

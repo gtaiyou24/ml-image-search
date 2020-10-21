@@ -14,11 +14,14 @@ class LocalTensorflowEstimatorRepository(EstimatorRepository):
     def get_or_create(self, name: str, version: float) -> Estimator:
         file_path = self.to_full_path + '{}_{}.h5'.format(name, version)
         if os.path.isfile(file_path):
-            estimator = CnnEstimator(name, version)
-            estimator.model = tf.keras.models.load_model(file_path)
-            return estimator
+            return self.get(name, version)
         else:
             return CnnEstimator(name, version)
+
+    def get(self, name: str, version: float) -> Estimator:
+        estimator = CnnEstimator(name, version)
+        estimator.model = tf.keras.models.load_model(file_path)
+        return estimator
 
     def save(self, estimator: CnnEstimator):
         estimator.save(self.to_full_path + '{}_{}.h5'.format(estimator.name(), estimator.version()))

@@ -9,5 +9,9 @@ class EstimatorRepository(abc.ABC):
         pass
 
     @abc.abstractmethod
+    def get(self, name: str, version: float) -> Estimator:
+        pass
+
+    @abc.abstractmethod
     def save(self, estimator: Estimator):
         pass

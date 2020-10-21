@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 import abc
+import numpy as np
+
+from batch.domain.model.vector import Vectors
 
 
 class Estimator(abc.ABC):
@@ -20,5 +23,5 @@ class Estimator(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def predict(self, X):
+    def predict(self, X) -> np.ndarray:
         pass
