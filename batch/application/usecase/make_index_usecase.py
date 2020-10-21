@@ -27,7 +27,6 @@ class MakeIndexUseCase:
 
         image_vector_arr = estimator.predict(dataset.X())
 
-        # TODO : WIP
-        vectors = Vectors(image_vector_arr)
+        vectors = Vectors.of(image_vector_arr)
 
         self.index_repository.save(vectors)

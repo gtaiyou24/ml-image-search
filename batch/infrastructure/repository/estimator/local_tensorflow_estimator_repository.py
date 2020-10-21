@@ -19,6 +19,7 @@ class LocalTensorflowEstimatorRepository(EstimatorRepository):
             return CnnEstimator(name, version)
 
     def get(self, name: str, version: float) -> Estimator:
+        file_path = self.to_full_path + '{}_{}.h5'.format(name, version)
         estimator = CnnEstimator(name, version)
         estimator.model = tf.keras.models.load_model(file_path)
         return estimator

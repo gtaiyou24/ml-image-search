@@ -33,11 +33,13 @@ class CnnEstimator(Estimator):
                        epochs=5,
                        validation_data=(self._feature_of(X_test),
                                         self._teacher_of(Y_test)))
-        # 出力層から１つ前の中間層を出力
-        self.hidden_layer_model = Model(inputs=self.model.input, outputs=self.model.get_layer('image_vector_dense').output)
 
     def predict(self, X) -> np.ndarray:
-        return self.hidden_layer_model.predict(self._feature_of(X))
+        if self.hidden_layer_model is None:
+            # 出力層から１つ前の中間層を出力
+            self.hidden_layer_model = Model(inputs=self.model.input,
+                                            outputs=self.model.get_layer('image_vector_dense').output)
+        return self.hidden_layer_model.predict(self._feature_of(X[1]))
 
     def _feature_of(self, X):
         # 特徴量の正規化(0~1の値に変換する)

@@ -1,5 +1,5 @@
 import sys
-import os; sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
+import os;sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from batch.application.usecase import TrainEstimatorUseCase
 from batch.infrastructure.repository.dataset import CIFARDataSetRepository
@@ -7,8 +7,8 @@ from batch.infrastructure.repository.estimator import LocalTensorflowEstimatorRe
 
 
 train_estimator_usecase = TrainEstimatorUseCase(
-    LocalTensorflowEstimatorRepository("../../"),
-    CIFARDataSetRepository()
+    LocalTensorflowEstimatorRepository("../"),
+    CIFARDataSetRepository(),
 )
 
 if __name__ == "__main__":
