@@ -38,4 +38,5 @@ class SearchImageUseCase:
         return self._make_dto(image_list)
 
     def _make_dto(self, image_list: List[Image]) -> SearchResultDto:
-        return SearchResultDto([SearchResultDto.Image(image.image_id.id, image.image_url.url) for image in image_list])
+        return SearchResultDto([
+            SearchResultDto.Image(image.image_id.id, image.image_url.url) for image in image_list])
