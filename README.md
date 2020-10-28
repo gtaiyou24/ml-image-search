@@ -2,11 +2,29 @@
 
  - [画像検索システムについて](https://docs.google.com/presentation/d/1U4psmf68yDAdP2JqvPPsFet1yPFiDGlB-ur5pJu-txs/edit#slide=id.ga3b140dff1_0_4)
 
----
-## 画像検索アルゴリズム
-### 教師なし手法
+## 実行方法
+### 1. バッチ
+```bash
+$ python batch/train_estimator.py <モデルの保存先> <モデル名> <バージョン>
+$ python batch/make_index.py <Indexパス> <次元数> <学習済みモデルのディレクトリパス> <学習済みモデル名> <学習済みモデルのバージョン>
 
-### 教師あり手法
+# 実行例
+$ python batch/train_estimator.py ./ CNNモデル 1.0
+$ python batch/make_index.py ./cifarインデックス.index 64 ./ CNNモデル 1.0
+```
+
+### 2. API
+```bash
+$ python api/start_flask.py
+
+# 画像URL指定で類似する画像を取得する
+$ curl -XPOST "http://127.0.0.1:5000/image/search" \
+    -H "Content-Type: application/json" \
+    -d '{
+        "image_url": "https://car.watch.impress.co.jp/img/car/docs/1256/450/01_l.jpg",
+        "k": 5
+    }'
+```
 
 ---
 ## 参考文献

@@ -1,3 +1,4 @@
+import argparse
 import sys
 import os;sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
@@ -6,10 +7,12 @@ from batch.infrastructure.repository.dataset import CIFARDataSetRepository
 from batch.infrastructure.repository.estimator import LocalTensorflowEstimatorRepository
 
 
-train_estimator_usecase = TrainEstimatorUseCase(
-    LocalTensorflowEstimatorRepository("../"),
-    CIFARDataSetRepository(),
-)
-
 if __name__ == "__main__":
-    train_estimator_usecase.train("教師あり_CNN", 1.0)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("save_to", help="モデルの保存先ディレクトリを指定してください。", default="./")
+    parser.add_argument("name", help="モデル名を指定してください。", default="CNNモデル")
+    parser.add_argument("version", help="モデルのバージョンを指定してください。。", default=1.0, type=float)
+    args = parser.parse_args()
+
+    TrainEstimatorUseCase(LocalTensorflowEstimatorRepository(args.save_to),
+                          CIFARDataSetRepository()).train(args.name, args.version)

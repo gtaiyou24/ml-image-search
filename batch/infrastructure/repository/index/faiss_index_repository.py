@@ -8,10 +8,10 @@ from batch.domain.repository import IndexRepository
 
 class FaissIndexRepository(IndexRepository):
 
-    def __init__(self, dimension: int, index_path: str, index_name):
+    def __init__(self, dimension: int, index_path):
         self.dimension = dimension
         self.index = faiss.IndexFlatL2(dimension)
-        self.index_path = os.path.join(index_path, '{}.index'.format(index_name))
+        self.index_path = index_path
 
     def save(self, vectors: Vectors):
         for vector in vectors.set:
