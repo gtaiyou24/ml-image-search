@@ -3,18 +3,22 @@ from flask import Flask, request, jsonify
 from api.application.dto import SearchResultDto
 from api.application.usecase import SearchImageUseCase
 from api.domain.model.feature import FeatureFactory
-from api.infrastructure.repository.estimator import InMemoryEstimatorRepository
+from api.infrastructure.repository.estimator import InMemoryEstimatorRepository, LocalTensorflowEstimatorRepository
 from api.infrastructure.repository.image import InMemoryImageRepository
-from api.infrastructure.repository.index import InMemoryIndexRepository
+from api.infrastructure.repository.index import InMemoryIndexRepository, FaissIndexRepository
 from api.presentation.response import ImagesJson
 
+
+ESTIMATOR_NAME = 'CNNモデル'
+VERSION = 1.0
 
 ImageSearchController = Flask(__name__)
 
 search_image_usecase = SearchImageUseCase(
+    ESTIMATOR_NAME, VERSION,
     FeatureFactory(),
-    InMemoryEstimatorRepository(),
-    InMemoryIndexRepository(),
+    LocalTensorflowEstimatorRepository('./'),
+    FaissIndexRepository('./cifarインデックス.index'),
     InMemoryImageRepository()
 )
 

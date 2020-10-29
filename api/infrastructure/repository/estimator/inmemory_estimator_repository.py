@@ -5,5 +5,5 @@ from api.domain.repository import EstimatorRepository
 
 class InMemoryEstimatorRepository(EstimatorRepository):
 
-    def get_latest(self) -> Estimator:
+    def get(self, name: str, version: float) -> Estimator:
         return RandomEstimator()

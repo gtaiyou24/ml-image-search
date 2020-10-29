@@ -9,10 +9,13 @@ from api.domain.repository import EstimatorRepository, IndexRepository, ImageRep
 class SearchImageUseCase:
 
     def __init__(self,
+                 name: str, version: float,
                  feature_factory: FeatureFactory,
                  estimator_repository: EstimatorRepository,
                  index_repository: IndexRepository,
                  image_repository: ImageRepository):
+        self.name = name
+        self.version = version
         self.feature_factory = feature_factory
         self.estimator_repository = estimator_repository
         self.index_repository = index_repository
@@ -23,7 +26,7 @@ class SearchImageUseCase:
         feature = self.feature_factory.make(ImageUrl(image_url))
 
         # 2. モデルリポジトリから最新モデルを取得する
-        estimator = self.estimator_repository.get_latest()
+        estimator = self.estimator_repository.get(self.name, self.version)
 
         # 3. モデルに特徴ベクトルを入力し、画像ベクトルを出力する
         image_vector = estimator.predict(feature)
